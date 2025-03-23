@@ -1,5 +1,3 @@
-CONTENT = './books/frankenstein.txt'
-
 def get_book_text(filepath):
     with open(filepath) as f:
         return f.read()
@@ -8,9 +6,8 @@ def get_book_words_numbs(content):
     num_words = len(content.split())
     return f"Found {num_words} total words"
 
-def get_symbols():
-    content = get_book_text(CONTENT).split()
-
+def get_symbols(content):
+    content = get_book_text(content).split()
     words_count = {}
 
     for word in content:
@@ -22,11 +19,11 @@ def get_symbols():
 
     return words_count
 
-def sort_words():
+def sort_words(content):
     def sort_on(dict_arg):
         return dict_arg["num"]
 
-    alpha_symbols = {k: v for k, v in get_symbols().items() if k.isalpha()}
+    alpha_symbols = {k: v for k, v in get_symbols(content).items() if k.isalpha()}
     arr = [{'symbol': key, 'num': value } for key, value in alpha_symbols.items()]
     arr.sort(reverse=True, key=sort_on)
 
@@ -34,7 +31,7 @@ def sort_words():
 
 
 def print_stats_report(content):
-    sorted_words = sort_words()
+    sorted_words = sort_words(content)
 
     first_line = "============ BOOKBOT ============"
     first_line_title = f"Analyzing book found at {content}..."
@@ -46,5 +43,3 @@ def print_stats_report(content):
 
     for i in sorted_words:
         print(f"{i['symbol']}: {i['num']}")
-
-sort_words()
